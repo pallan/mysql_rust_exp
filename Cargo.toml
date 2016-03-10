@@ -4,5 +4,6 @@ version = "0.1.0"
 authors = ["Peer Allan <peer.allan@shopify.com>"]
 
 [dependencies]
+nickel="0.7.3"
 mysql="2.1.0"
 rustc-serialize = "0.3.18"

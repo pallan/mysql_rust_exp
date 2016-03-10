@@ -1,8 +1,9 @@
-extern crate mysql;
+#[macro_use] extern crate nickel;
 extern crate rustc_serialize;
+extern crate mysql;
 
+use nickel::{Nickel, HttpRouter, MediaType};
 use rustc_serialize::json;
-use std::default::Default;
 use mysql as my;
 use mysql::conn::Opts;
 
@@ -24,20 +25,28 @@ fn main() {
 
     let pool = my::Pool::new(opts).unwrap();
 
-    // Let's select payments from database
-    let selected_ips: Vec<IPSpace> =
-    pool.prep_exec("SELECT * from ip_space LIMIT 10", ())
-    .map(|result| {
-        result.map(|x| x.unwrap()).map(|row| {
-            let (id, shop_id, domain, count) = my::from_row(row);
-            IPSpace {
-                id: id,
-                shop_id: shop_id,
-                domain: domain,
-                count: count,
-            }
-        }).collect()
-    }).unwrap();
+    let mut server = Nickel::new();
 
-    println!("{:?}", json::encode(&selected_ips).unwrap());
+    server.get("/raw", middleware! { |_, mut response|
+        // Let's select payments from database
+        let selected_ips: Vec<IPSpace> =
+        pool.prep_exec("SELECT * from ip_space ORDER BY RAND() LIMIT 10", ())
+        .map(|result| {
+            result.map(|x| x.unwrap()).map(|row| {
+                let (id, shop_id, domain, count) = my::from_row(row);
+                IPSpace {
+                    id: id,
+                    shop_id: shop_id,
+                    domain: domain,
+                    count: count,
+                }
+            }).collect()
+        }).unwrap();
+
+        response.set(MediaType::Json);
+        let response_body = json::encode(&selected_ips).unwrap();
+        response_body
+    });
+
+    server.listen("127.0.0.1:9001");
 }
