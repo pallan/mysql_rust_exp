@@ -1,6 +1,11 @@
+## Siege Results
+
+The endpoint is a JSON response of 10 rows of data randomly pulled from a four column MySQL table. The table contains ~100,000 rows.
+
 ### Run #1
-*Command:* siege -b -t60S  http://localhost:9001/raw
-*Notes:* MySQL connection within the server routing function
+**Command:** `siege -b -t60S  http://localhost:9001/raw`
+
+**Notes:** MySQL connection within the server routing function
 
 ```
 Transactions:            668 hits
@@ -18,8 +23,9 @@ Shortest transaction:         0.67
 ```
 
 ### Run #2
-*Command:* siege -b -t60S  http://localhost:9001/raw
-*Notes:* MySQL connection outside the server routing function
+**Command:** `siege -b -t60S  http://localhost:9001/raw`
+
+**Notes:** MySQL connection outside the server routing function
 
 ```
 Transactions:           1320 hits
@@ -37,8 +43,10 @@ Shortest transaction:         0.34
 ```
 
 ### Run #3
-*Command:* siege -c50 -d10 -t60S  http://localhost:9001/raw
-*Notes:* MySQL connection outside the server routing function with a concurrency of 50
+
+**Command:** `siege -c50 -d10 -t60S  http://localhost:9001/raw`
+
+**Notes:** MySQL connection outside the server routing function with a concurrency of 50
 
 ```
 Transactions:            577 hits
