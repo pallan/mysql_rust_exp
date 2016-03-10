@@ -1,7 +1,8 @@
-# === Run #1
-# Command: siege -b -t60S  http://localhost:9001/raw
-# Notes: MySQL connection within the server routing function
+### Run #1
+*Command:* siege -b -t60S  http://localhost:9001/raw
+*Notes:* MySQL connection within the server routing function
 
+```
 Transactions:            668 hits
 Availability:         100.00 %
 Elapsed time:          59.60 secs
@@ -14,11 +15,13 @@ Successful transactions:         668
 Failed transactions:             0
 Longest transaction:          2.03
 Shortest transaction:         0.67
+```
 
-# === Run #2
-# Command: siege -b -t60S  http://localhost:9001/raw
-# Notes: MySQL connection outside the server routing function
+### Run #2
+*Command:* siege -b -t60S  http://localhost:9001/raw
+*Notes:* MySQL connection outside the server routing function
 
+```
 Transactions:           1320 hits
 Availability:         100.00 %
 Elapsed time:          59.82 secs
@@ -31,12 +34,13 @@ Successful transactions:        1320
 Failed transactions:             0
 Longest transaction:          1.00
 Shortest transaction:         0.34
+```
 
-# === Run #3
-# Command: siege -c50 -d10 -t60S  http://localhost:9001/raw
-# Notes: MySQL connection outside the server routing function with 
-# a concurrency of 50
+### Run #3
+*Command:* siege -c50 -d10 -t60S  http://localhost:9001/raw
+*Notes:* MySQL connection outside the server routing function with a concurrency of 50
 
+```
 Transactions:            577 hits
 Availability:         100.00 %
 Elapsed time:          59.19 secs
@@ -49,3 +53,4 @@ Successful transactions:         577
 Failed transactions:             0
 Longest transaction:          0.34
 Shortest transaction:         0.11
+```
